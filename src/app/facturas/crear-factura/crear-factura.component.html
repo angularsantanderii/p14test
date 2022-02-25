@@ -1,0 +1,89 @@
+<div class="container">
+    <div class="row">
+        <div class="col-100">
+            <h1>Ejemplo de formulario reactivo</h1>
+            <form [formGroup]="formFactura" (ngSubmit)="addFactura()">
+                <div class="row column">
+                    <label>
+                        Cliente
+                        <span class="valid" *ngIf="formFactura.controls['cliente'].valid">
+                            &#10004;
+                        </span>
+                        <span class="alert" *ngIf="formFactura.controls['cliente'].errors?.['required'] &&
+                                                   formFactura.controls['cliente'].touched">
+                            El cliente es obligatorio
+                        </span>
+                        <span class="alert" *ngIf="formFactura.controls['cliente'].errors?.['minlength'] &&
+                                                   formFactura.controls['cliente'].dirty">
+                            El cliente debe tener al menos 4 caracteres
+                        </span>
+                    </label>
+                    <input type="text" formControlName="cliente">
+                </div>
+                <div class="row column">
+                    <label>
+                        CIF
+                        <span class="valid" *ngIf="formFactura.controls['cif'].valid">
+                            &#10004;
+                        </span>
+                        <span class="alert" *ngIf="formFactura.controls['cif'].errors?.['invalidCif'] &&
+                                                   formFactura.controls['cif'].dirty">
+                            {{formFactura.controls['cif'].errors?.['mensaje']}}
+                        </span>
+                    </label>
+                    <input type="text" formControlName="cif" maxlength="9">
+                </div>
+                <div class="row column">
+                    <label>Fecha factura</label>
+                    <input type="date" formControlName="fecha">
+                </div>
+                <div class="row">
+                    <div class="col-50"></div>
+                    <div class="col-50">
+                        <label>Base imponible</label>
+                        <input type="number" formControlName="baseImponible">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-50"></div>
+                    <div class="col-50">
+                        <label>% IVA</label>
+                        <select formControlName="tipoIVA">
+                            <option value=0>0 %</option>
+                            <option value=0.04>4 %</option>
+                            <option value=0.1>10 %</option>
+                            <option value=0.21>21 %</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-50"></div>
+                    <div class="col-50">
+                        <label>Importe IVA</label>
+                        <input type="number" formControlName="importeIVA" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-50"></div>
+                    <div class="col-50">
+                        <label>Total Factura IVA incluido</label>
+                        <input type="number" formControlName="totalFactura" readonly>
+                    </div>
+                </div>
+                <div class="flex j-end">
+                    <button type="button" class="outline">Cancelar</button>
+                    <button type="submit" [disabled]="formFactura.invalid">Añadir</button>
+                </div>
+
+                <!-- <pre>{{formFactura.value | json}}</pre>
+                <p>Estado global formulario valid {{formFactura.valid}}</p> -->
+                <!-- <p>Estado valid campo Cliente: {{formFactura.controls['cliente'].valid}}</p>
+                <p>Estado invalid campo Cliente: {{formFactura.controls['cliente'].invalid}}</p>
+                <p>Estado pristine campo Cliente: {{formFactura.controls['cliente'].pristine}}</p>
+                <p>Estado dirty campo Cliente: {{formFactura.controls['cliente'].dirty}}</p>
+                <p>Estado untouched campo Cliente: {{formFactura.controls['cliente'].untouched}}</p>
+                <p>Estado touched campo Cliente: {{formFactura.controls['cliente'].touched}}</p> -->
+            </form>
+        </div>
+    </div>
+</div>
